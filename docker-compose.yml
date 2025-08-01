@@ -1,0 +1,30 @@
+# version: "3.3"
+services:
+  app:
+    build:
+      context: .
+      args:
+        - DEV=true
+      dockerfile: Dockerfile
+    restart: on-failure
+    ports:
+      - "8000:8000"
+    volumes:
+      - "./src/rag:/app/src/rag"
+      - "./tests/rag:/app/tests/rag"
+    command: >
+      sh -c "
+        flake8 src/rag && \
+        coverage run -m pytest tests/rag && \
+        coverage report && \
+        uvicorn src.rag.main:app --reload --port 8000 --host 0.0.0.0
+      "
+    environment:
+      - PYTHONPATH=/app
+
+    networks:
+      rag-dev:
+
+networks:
+  rag-dev:
+    external: true
