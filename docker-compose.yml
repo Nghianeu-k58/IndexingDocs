@@ -14,6 +14,7 @@ services:
       - "./tests/rag:/app/tests/rag"
     command: >
       sh -c "
+        python src/rag/dataaccess/migrations/elasticsearch/wait_for_elastic.py && \
         flake8 src/rag && \
         coverage run -m pytest tests/rag && \
         coverage report && \
@@ -22,8 +23,30 @@ services:
     environment:
       - PYTHONPATH=/app
 
+      # Elastic Env
+      - ELASTIC_HOST=elasticsearch
+      - ELASTIC_PORT=$ELASTIC_PORT
+
     networks:
       rag-dev:
+
+  elasticsearch:
+    image: elasticsearch:$ELASTIC_VERSION
+    ports:
+      - $ELASTIC_PORT:$ELASTIC_PORT
+    environment:
+      discovery.type: 'single-node'
+      xpack.security.enabled: 'true'
+      xpack.security.enrollment.enabled: 'true'
+      ELASTIC_PASSWORD: $ELASTIC_PASSWORD
+      ES_JAVA_OPTS: '-Xmx1g -Xms1g'
+    volumes:
+      - elasticsearch-dev:/usr/share/elasticsearch/data
+    networks:
+      rag-dev:
+
+volumes:
+  elasticsearch-dev:
 
 networks:
   rag-dev:

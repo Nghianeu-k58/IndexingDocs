@@ -10,10 +10,13 @@ build:
 	docker-compose build 
 
 up:
-	docker-compose up
+	docker-compose up -d
 
 down:
 	docker-compose down
 
 check-flake8:
 	docker-compose run --rm app sh -c "flake8 src/rag tests" 
+
+log-elastic:
+	docker-compose logs -f elasticsearch
