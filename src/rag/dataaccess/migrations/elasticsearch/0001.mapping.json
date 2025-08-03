@@ -1,0 +1,23 @@
+{
+  "documentation": {
+    "mappings": {
+      "properties": {
+        "doc_id": { "type": "keyword" },
+        "keywords": { "type": "keyword" },
+        "doc_content": { "type": "text" },
+        "created_date": { "type": "date" },
+        "insert_user": { "type": "integer" }
+      }
+    }
+  },
+  "user": {
+    "mappings": {
+      "properties": {
+        "user_id": { "type": "integer" },
+        "username": { "type": "keyword" },
+        "password": { "type": "keyword" },
+        "created_date": { "type": "date" }
+      }
+    }
+  }
+}

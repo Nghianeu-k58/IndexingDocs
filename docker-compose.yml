@@ -15,6 +15,7 @@ services:
     command: >
       sh -c "
         python src/rag/dataaccess/migrations/elasticsearch/wait_for_elastic.py && \
+        python src/rag/dataaccess/migrations/elasticsearch/migrate.py && \
         flake8 src/rag && \
         coverage run -m pytest tests/rag && \
         coverage report && \
@@ -26,6 +27,11 @@ services:
       # Elastic Env
       - ELASTIC_HOST=elasticsearch
       - ELASTIC_PORT=$ELASTIC_PORT
+      - ELASTIC_USERNAME=$ELASTIC_USERNAME
+      - ELASTIC_PASSWORD=$ELASTIC_PASSWORD
+      - ELASTIC_MAPPING_VERSION=$ELASTIC_MAPPING_VERSION
+      - ELASTIC_VERIFY_CERTS=$ELASTIC_VERIFY_CERTS
+      - ELASTIC_SCHEME_CONNNECTION=$ELASTIC_SCHEME_CONNNECTION
 
     networks:
       rag-dev:
@@ -35,13 +41,15 @@ services:
     ports:
       - $ELASTIC_PORT:$ELASTIC_PORT
     environment:
-      discovery.type: 'single-node'
-      xpack.security.enabled: 'true'
-      xpack.security.enrollment.enabled: 'true'
-      ELASTIC_PASSWORD: $ELASTIC_PASSWORD
-      ES_JAVA_OPTS: '-Xmx1g -Xms1g'
+      - discovery.type=single-node
+      - xpack.security.http.ssl.enabled=false
+      - ELASTIC_PASSWORD=$ELASTIC_PASSWORD
+      - ES_JAVA_OPTS=-Xmx1g -Xms1g
     volumes:
       - elasticsearch-dev:/usr/share/elasticsearch/data
+      # - ./src/rag/dataaccess/config/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      # - ./src/rag/dataaccess/config/elasticsearch/certs:/usr/share/elasticsearch/config/certs
+
     networks:
       rag-dev:
 
