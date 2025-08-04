@@ -47,9 +47,6 @@ services:
       - ES_JAVA_OPTS=-Xmx1g -Xms1g
     volumes:
       - elasticsearch-dev:/usr/share/elasticsearch/data
-      # - ./src/rag/dataaccess/config/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
-      # - ./src/rag/dataaccess/config/elasticsearch/certs:/usr/share/elasticsearch/config/certs
-
     networks:
       rag-dev:
 
