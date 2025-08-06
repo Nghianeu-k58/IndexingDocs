@@ -8,6 +8,7 @@ from fastapi.testclient import TestClient
 from src.rag.main import app
 from src.rag.core.enums import ElasticENV
 
+
 ELASTIC_HOST_FAKE = "fake_elastic_host"
 ELASTIC_PORT_FAKE = 1234
 

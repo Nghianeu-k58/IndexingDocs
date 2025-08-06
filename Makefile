@@ -1,6 +1,6 @@
 run-test:
 	docker-compose run --rm app sh -c \
-		"coverage run -m pytest tests/rag -v && coverage report" 
+		"flake8 src/rag tests && coverage run -m pytest tests/rag -v && coverage report" 
 
 check-black:
 	docker-compose run --rm app sh -c \

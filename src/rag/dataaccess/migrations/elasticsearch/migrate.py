@@ -31,10 +31,19 @@ def main(es_conn: Elasticsearch):
 
     logger.info("Start migration for Elasticsearch ...")
     for table_name, fields in schemas.items():
-        if es_conn.indices.exists(index=f"{table_name}_{MAPPING_VERSION}"):
-            continue
+        if es_conn.indices.exists(index=f"{table_name}"):
+            mappings = es_conn.indices.get_mapping(index=table_name)
+            current_version = (
+                mappings.get(table_name, {})
+                .get("mappings", {})
+                .get("_meta", {})
+                .get("mapping_version", {})
+            )
+            if current_version == MAPPING_VERSION:
+                continue
+
         es_conn.indices.create(
-            index=f"{table_name}_{MAPPING_VERSION}",
+            index=f"{table_name}",
             body=fields,
         )
 

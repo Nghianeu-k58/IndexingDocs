@@ -2,9 +2,20 @@
 Define all enums that user for all system.
 """
 
+DATETIME_FORMAT = "%Y-%m-%d-%H-%M-%S"
 
-class SystemEnvironmentVariable:
+
+class UserFields:
+    email = "email"
+    user_id = "user_id"
+    role = "role"
+
+
+class SystemENV:
     logging_mode = "LOGGING_MODE"
+    api_key = "API_KEY"
+    algorithm = "ALGORITHM"
+    expire_day = "EXPIRE_DAYS"
 
 
 class LoggingMode:

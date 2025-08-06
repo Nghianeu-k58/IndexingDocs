@@ -5,7 +5,7 @@ Define logger
 import os
 import logging
 
-from src.rag.core.enums import LoggingMode, SystemEnvironmentVariable
+from src.rag.core.enums import LoggingMode, SystemENV
 
 logging.basicConfig(format="%(asctime)s %(name)s %(levelname)s %(message)s")
 logger = logging.getLogger()
@@ -28,7 +28,5 @@ def setup_logger_mode(mode: str):
     return logger_mode
 
 
-logger_mode = setup_logger_mode(
-    mode=os.environ.get(SystemEnvironmentVariable.logging_mode)
-)
+logger_mode = setup_logger_mode(mode=os.environ.get(SystemENV.logging_mode))
 logger.setLevel(logger_mode)

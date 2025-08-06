@@ -4,3 +4,4 @@ python-multipart>=0.0.6,<0.1.0
 httpx>=0.27.0,<0.28.0
 requests>=2.32.0,<2.33.0
 elasticsearch>=8.11.0,<8.12.0
+passlib>=1.7.0,<1.8.0

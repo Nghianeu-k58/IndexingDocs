@@ -3,6 +3,7 @@ Define to app registers for rag services.
 """
 
 from fastapi import FastAPI, Response, status
+from .api import api_routers
 
 DESCRIPTION = """
 Welcome to LocalRAG API documentation!
@@ -16,6 +17,9 @@ app = FastAPI(
     docs_url="/api/docs",
     redoc_url="/api/schemas",
 )
+
+
+app.include_router(api_routers)
 
 
 @app.get("/health-check", tags=["Health Check"])

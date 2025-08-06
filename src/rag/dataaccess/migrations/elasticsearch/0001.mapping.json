@@ -1,22 +1,58 @@
 {
   "documentation": {
+    "settings": {
+      "index": {
+        "number_of_shards": 3,
+        "number_of_replicas": 0
+      }
+    },
     "mappings": {
+      "_meta": {
+        "mapping_version": "0001"
+      },
       "properties": {
-        "doc_id": { "type": "keyword" },
-        "keywords": { "type": "keyword" },
-        "doc_content": { "type": "text" },
-        "created_date": { "type": "date" },
-        "insert_user": { "type": "integer" }
+        "doc_id": {
+          "type": "keyword"
+        },
+        "keywords": {
+          "type": "keyword"
+        },
+        "doc_content": {
+          "type": "text"
+        },
+        "created_date": {
+          "type": "date"
+        },
+        "insert_user": {
+          "type": "integer"
+        }
       }
     }
   },
   "user": {
+    "settings": {
+      "index": {
+        "number_of_shards": 3,
+        "number_of_replicas": 0
+      }
+    },
     "mappings": {
+      "_meta": {
+        "mapping_version": "0001"
+      },
       "properties": {
-        "user_id": { "type": "integer" },
-        "username": { "type": "keyword" },
-        "password": { "type": "keyword" },
-        "created_date": { "type": "date" }
+        "user_id": {
+          "type": "integer"
+        },
+        "username": {
+          "type": "keyword"
+        },
+        "password": {
+          "type": "keyword"
+        },
+        "created_date": {
+          "type": "date"
+        }
       }
     }
   }
