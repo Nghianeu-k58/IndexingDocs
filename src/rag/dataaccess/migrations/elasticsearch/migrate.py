@@ -10,7 +10,9 @@ from elasticsearch import Elasticsearch
 
 from src.rag.core.logger import logger
 from src.rag.core.enums import ElasticENV
-from src.rag.dataaccess.migrations.elasticsearch.connection import es_conn
+from src.rag.dataaccess.migrations.elasticsearch.connection import (
+    preparing_connection_to_es,
+)
 
 MAPPING_VERSION = os.environ.get(ElasticENV.mapping_version)
 mapping_file = (
@@ -51,4 +53,5 @@ def main(es_conn: Elasticsearch):
 
 
 if __name__ == "__main__":
+    es_conn = preparing_connection_to_es()
     main(es_conn)

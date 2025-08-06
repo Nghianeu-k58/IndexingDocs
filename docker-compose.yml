@@ -25,6 +25,7 @@ services:
       # System Env
       - PYTHONPATH=/app
       - API_KEY=$API_KEY
+      - SECRET_KEY=$SECRET_KEY
       - ALGORITHM=$ALGORITHM
       - EXPIRE_DAYS=$EXPIRE_DAYS
 
@@ -36,6 +37,9 @@ services:
       - ELASTIC_MAPPING_VERSION=$ELASTIC_MAPPING_VERSION
       - ELASTIC_VERIFY_CERTS=$ELASTIC_VERIFY_CERTS
       - ELASTIC_SCHEME_CONNNECTION=$ELASTIC_SCHEME_CONNNECTION
+
+    depends_on:
+      - elasticsearch
 
     networks:
       rag-dev:

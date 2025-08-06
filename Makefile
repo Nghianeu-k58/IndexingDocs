@@ -20,3 +20,6 @@ check-flake8:
 
 log-elastic:
 	docker-compose logs -f elasticsearch
+
+migrate:
+	docker-compose run --rm app sh -c "python src/rag/dataaccess/migrations/elasticsearch/migrate.py"

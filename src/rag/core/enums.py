@@ -2,7 +2,13 @@
 Define all enums that user for all system.
 """
 
-DATETIME_FORMAT = "%Y-%m-%d-%H-%M-%S"
+DATETIME_FORMAT = "%Y-%m-%d %H-%M-%S"
+
+
+class HashAlgorithms:
+    md5 = "MD5"
+    sha256 = "SHA256"
+    sha512 = "SHA512"
 
 
 class UserFields:

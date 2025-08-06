@@ -42,9 +42,15 @@
       },
       "properties": {
         "user_id": {
-          "type": "integer"
+          "type": "keyword"
         },
-        "username": {
+        "email": {
+          "type": "keyword"
+        },
+        "name": {
+          "type": "keyword"
+        },
+        "role": {
           "type": "keyword"
         },
         "password": {

@@ -22,19 +22,25 @@ ELASTIC_SCHEME_CONNNECTION = os.environ.get(ElasticENV.connection_scheme)
 logger.debug(f"Connect to ElasticSearch database at {ELASTIC_ENDPOINT}")
 
 
-es_conn = Elasticsearch(
-    hosts=[
-        {
-            "host": ELASTIC_HOST,
-            "port": ELASTIC_PORT,
-            "scheme": ELASTIC_SCHEME_CONNNECTION,
-        },
-    ],
-    http_auth=tuple([ELASTIC_USERNAME, ELASTIC_PASSWORD]),
-    verify_certs=bool(ELASTIC_VERIFY_CERTS),
-)
+def preparing_connection_to_es():
+    """Create and return connection to Elasticsearch."""
+    return Elasticsearch(
+        hosts=[
+            {
+                "host": ELASTIC_HOST,
+                "port": ELASTIC_PORT,
+                "scheme": ELASTIC_SCHEME_CONNNECTION,
+            },
+        ],
+        basic_auth=tuple([ELASTIC_USERNAME, ELASTIC_PASSWORD]),
+        verify_certs=bool(ELASTIC_VERIFY_CERTS),
+    )
 
 
 def get_elastic_connection():
     """Get and return ELASTIC connection."""
-    yield es_conn
+    es_conn = preparing_connection_to_es()
+    try:
+        yield es_conn
+    finally:
+        es_conn.close()
