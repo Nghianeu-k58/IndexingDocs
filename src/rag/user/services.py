@@ -11,11 +11,17 @@ from src.rag.core.utils import generate_id
 from src.rag.user.enums import UserField, Role
 from src.rag.auth.services import bcrypt_context
 from src.rag.dataaccess.migrations.elasticsearch.enums import ElasticsearchIndies
+from src.rag.user.utils import email_validate
 
 
 def create_user_logic(usre_data: dict, es_conn: Elasticsearch):
     """Define logic for create user."""
     logger.info(f"Start create user with email: {usre_data[UserField.email]} ...")
+    logger.info("Validating email ...")
+    res, msg = email_validate(usre_data[UserField.email])
+    if not res:
+        return False, msg
+
     logger.info("Check user existed or not in database ...")
     user_record = es_conn.search(
         index=ElasticsearchIndies.user,
@@ -27,13 +33,15 @@ def create_user_logic(usre_data: dict, es_conn: Elasticsearch):
     es_conn.index(
         index=ElasticsearchIndies.user,
         document={
-            UserField.user_id: generate_id(HashAlgorithms.sha256, usre_data[UserField.email]),
+            UserField.user_id: generate_id(
+                HashAlgorithms.sha256, usre_data[UserField.email]
+            ),
             UserField.email: usre_data[UserField.email],
             UserField.password: bcrypt_context.hash(usre_data[UserField.password]),
             UserField.role: Role.user,
             UserField.name: usre_data[UserField.name],
-            UserField.created_date: datetime.now().isoformat()
-        }
+            UserField.created_date: datetime.now().isoformat(),
+        },
     )
     es_conn.indices.refresh(index=ElasticsearchIndies.user)
     return True, f"Create user with email {usre_data[UserField.email]} successful."

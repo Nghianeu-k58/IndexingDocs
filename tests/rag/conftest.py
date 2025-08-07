@@ -76,7 +76,7 @@ def users_data(es_connection):
     records = [
         {
             UserField.user_id: f"Testidforuser{i}",
-            UserField.email: f"test_example{i}.com",
+            UserField.email: f"test_user{i}@example.com",
             UserField.password: "Testpass-123",
             UserField.name: f"Test name {i}",
             UserField.role: Role.user,

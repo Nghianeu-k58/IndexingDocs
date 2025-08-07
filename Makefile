@@ -1,6 +1,9 @@
 run-test:
 	docker-compose run --rm app sh -c \
-		"flake8 src/rag tests && coverage run -m pytest tests/rag -v && coverage report" 
+		"	flake8 src/rag tests && \
+			python src/rag/dataaccess/migrations/elasticsearch/wait_for_elastic.py && \
+			coverage run -m pytest tests/rag -v && \
+			coverage report"
 
 check-black:
 	docker-compose run --rm app sh -c \
