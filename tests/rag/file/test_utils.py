@@ -18,9 +18,9 @@ def test_preparing_index_document():
         user=Role.anonymous,
     )
 
-    assert DocsIndexingFields.doc_id in func_out
-    assert DocsIndexingFields.doc_content in func_out
+    assert DocsIndexingFields.id in func_out
+    assert DocsIndexingFields.content in func_out
     assert DocsIndexingFields.created_date in func_out
-    assert DocsIndexingFields.insert_user in func_out
+    assert DocsIndexingFields.user in func_out
     assert DocsIndexingFields.title in func_out
-    assert DocsIndexingFields.keywords in func_out
+    assert DocsIndexingFields.key_words in func_out

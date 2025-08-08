@@ -7,12 +7,12 @@ from typing import List
 
 
 class DocsIndexingFields:
-    doc_id = "doc_id"
-    keywords = "keywords"
-    doc_content = "doc_content"
+    id = "doc_id"
+    key_words = "key_words"
+    content = "doc_content"
     created_date = "created_date"
     title = "title"
-    insert_user = "insert_user"
+    user = "insert_user"
 
 
 # Define all Pydantic model.
@@ -20,9 +20,8 @@ class DocsIndexingFields:
 
 class BaseDocs(BaseModel):
     doc_id: str
-    user: str
 
 
-class DocsInsert(BaseDocs):
+class DocsInsert(BaseModel):
     title: str
     key_words: List[str]

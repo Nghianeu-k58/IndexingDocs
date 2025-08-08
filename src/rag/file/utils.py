@@ -20,10 +20,10 @@ def preparing_index_document(
     doc_id = generate_id(HashAlgorithms.md5, title, created_date, user)
 
     return {
-        DocsIndexingFields.doc_id: doc_id,
-        DocsIndexingFields.doc_content: doc_content,
-        DocsIndexingFields.keywords: key_words,
-        DocsIndexingFields.insert_user: user,
+        DocsIndexingFields.id: doc_id,
+        DocsIndexingFields.content: doc_content,
+        DocsIndexingFields.key_words: key_words,
+        DocsIndexingFields.user: user,
         DocsIndexingFields.title: title,
         DocsIndexingFields.created_date: created_date,
     }

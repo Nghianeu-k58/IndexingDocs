@@ -17,6 +17,9 @@
         "keywords": {
           "type": "keyword"
         },
+        "title": {
+          "type": "keyword"
+        },
         "doc_content": {
           "type": "text"
         },
@@ -24,7 +27,7 @@
           "type": "date"
         },
         "insert_user": {
-          "type": "integer"
+          "type": "keyword"
         }
       }
     }
