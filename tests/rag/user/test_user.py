@@ -25,13 +25,16 @@ def test_create_user_successful(client, es_connection):
         index="user", body={"query": {"match": {"email": test_email}}}
     )
     assert len(user_record["hits"]["hits"]) != 0
+    stored_password = user_record["hits"]["hits"][0]["_source"]["password"]
+
+    assert stored_password != "Testpass123"
 
 
 def test_create_user_already_existed(client, users_data):
     test_email = "test_user1@example.com"
     payload = {
         UserField.email: test_email,
-        UserField.password: "Testpass123",
+        UserField.password: "Testpass-123",
         UserField.name: "Test name",
     }
     res = client.post(url=USER_URL, json=payload)

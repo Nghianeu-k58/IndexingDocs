@@ -16,7 +16,7 @@ from fastapi.responses import JSONResponse
 
 from src.rag.core.logger import logger
 from src.rag.file.models import DocsIndexingFields
-from src.rag.dataaccess.migrations.elasticsearch.connection import (
+from src.rag.dataaccess.configuration.elasticsearch.connection import (
     get_elastic_connection,
 )
 from src.rag.file.services import insert_doc

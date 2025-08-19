@@ -10,7 +10,7 @@ from src.rag.core.enums import HashAlgorithms
 from src.rag.core.utils import generate_id
 from src.rag.user.enums import UserField, Role
 from src.rag.auth.services import bcrypt_context
-from src.rag.dataaccess.migrations.elasticsearch.enums import ElasticsearchIndies
+from src.rag.dataaccess.configuration.elasticsearch.enums import ElasticsearchIndies
 from src.rag.user.utils import email_validate
 
 

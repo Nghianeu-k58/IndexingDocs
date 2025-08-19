@@ -7,7 +7,7 @@ from fastapi.responses import JSONResponse
 from elasticsearch import Elasticsearch
 
 from src.rag.user.models import UserCreate
-from src.rag.dataaccess.migrations.elasticsearch.connection import (
+from src.rag.dataaccess.configuration.elasticsearch.connection import (
     get_elastic_connection,
 )
 from src.rag.user.services import create_user_logic

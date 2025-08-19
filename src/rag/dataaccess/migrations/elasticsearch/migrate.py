@@ -10,7 +10,7 @@ from elasticsearch import Elasticsearch
 
 from src.rag.core.logger import logger
 from src.rag.core.enums import ElasticENV
-from src.rag.dataaccess.migrations.elasticsearch.connection import (
+from rag.dataaccess.configuration.elasticsearch.connection import (
     preparing_connection_to_es,
 )
 

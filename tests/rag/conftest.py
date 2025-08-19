@@ -11,10 +11,11 @@ from elasticsearch import Elasticsearch
 
 from src.rag.main import app
 from src.rag.core.enums import ElasticENV
-from src.rag.dataaccess.migrations.elasticsearch.connection import (
+from src.rag.dataaccess.configuration.elasticsearch.connection import (
     get_elastic_connection,
 )
-from src.rag.dataaccess.migrations.elasticsearch.enums import ElasticsearchIndies
+from src.rag.dataaccess.configuration.elasticsearch.enums import ElasticsearchIndies
+from src.rag.auth.services import bcrypt_context
 from src.rag.user.enums import UserField, Role
 
 ELASTIC_HOST = os.environ.get(ElasticENV.host)
@@ -46,15 +47,15 @@ def es_connection():
         basic_auth=tuple([TEST_ELASTIC_USERNAME, TEST_ELASTIC_PASSWORD]),
         verify_certs=bool(TEST_ELASTIC_VERIFY_CERTS),
     )
-    try:
-        yield conn
-    finally:
-        indices = conn.indices.get_alias(index="*").keys()
-        for idx in indices:
-            if idx.startswith("."):  # skip system indices
-                continue
-            conn.delete_by_query(index=idx, body={"query": {"match_all": {}}})
-        conn.close()
+    # try:
+    yield conn
+    # finally:
+    #     indices = conn.indices.get_alias(index="*").keys()
+    #     for idx in indices:
+    #         if idx.startswith("."):  # skip system indices
+    #             continue
+    #         conn.delete_by_query(index=idx, body={"query": {"match_all": {}}})
+    #     conn.close()
 
 
 @pytest.fixture(scope="function")
@@ -71,13 +72,13 @@ def client(es_connection):
         app.dependency_overrides[get_elastic_connection] = get_elastic_connection
 
 
-@pytest.fixture()
+@pytest.fixture(scope="session")
 def users_data(es_connection):
     records = [
         {
             UserField.user_id: f"Testidforuser{i}",
             UserField.email: f"test_user{i}@example.com",
-            UserField.password: "Testpass-123",
+            UserField.password: bcrypt_context.hash("Testpass-123"),
             UserField.name: f"Test name {i}",
             UserField.role: Role.user,
             UserField.created_date: "2025-01-01",
@@ -92,4 +93,10 @@ def users_data(es_connection):
         )
 
     es_connection.indices.refresh(index=ElasticsearchIndies.user)
-    yield records
+    try:
+        yield records
+    finally:
+        es_connection.delete_by_query(
+            index=ElasticsearchIndies.user,
+            body={"query": {"match_all": {}}},
+        )

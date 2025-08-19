@@ -5,7 +5,7 @@ Test file API.
 from fastapi import status
 
 from src.rag.file.models import DocsIndexingFields
-from src.rag.dataaccess.migrations.elasticsearch.enums import ElasticsearchIndies
+from src.rag.dataaccess.configuration.elasticsearch.enums import ElasticsearchIndies
 
 
 TEST_FILE_DATA = "tests/rag/file/data/test_doc.txt"
