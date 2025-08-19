@@ -22,6 +22,7 @@ class SystemENV:
     api_key = "API_KEY"
     algorithm = "ALGORITHM"
     expire_day = "EXPIRE_DAYS"
+    secret_key = "SECRET_KEY"
 
 
 class LoggingMode:

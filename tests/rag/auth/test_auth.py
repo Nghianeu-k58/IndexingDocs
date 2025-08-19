@@ -3,11 +3,15 @@ Test all auth services.
 """
 import os
 
-
+from unittest.mock import patch
 import pytest
 from fastapi import status
+from datetime import datetime
 
-from src.rag.auth.services import validate_api_key
+from src.rag.auth.services import (
+    validate_api_key,
+    create_access_token,
+)
 from src.rag.core.enums import (
     SystemENV,
     # UserFields,
@@ -65,3 +69,22 @@ async def test_validate_api_key_failed():
     func_out = await validate_api_key(api_key_header=input_key)
 
     assert func_out is False
+
+
+@patch("src.rag.auth.services.datetime")
+def test_create_access_token(patched_time):
+    """Test for create access token."""
+    patched_time.now.return_value = datetime(2025, 1, 1, 00, 00, 00)
+
+    parts = [
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
+        "eyJzdWIiOiJ0ZXN0X3VzZXJAZXhhbXBsZS5jb20iLCJpZCI6InRlc3RfdXNlcl9pZCIsInJvbGUiOiJ1c2VyIn0",
+        "LGPjkFDKORBVxkuFqpswC_gu2loVRP6Vi-f8QYSXHCQ",
+    ]
+
+    token, expires = create_access_token(
+        email="test_user@example.com", user_id="test_user_id", role="user"
+    )
+
+    assert ".".join(parts) == token
+    assert expires == "2025-01-02 00-00-00"
